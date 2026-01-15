@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none">
+  <!-- Light glow -->
+  <circle cx="15" cy="8" r="8" fill="#FEF3C7" opacity="0.5"/>
+  <!-- Lamp head -->
+  <ellipse cx="15" cy="8" rx="6" ry="4" fill="#F5F5F4"/>
+  <!-- Light -->
+  <ellipse cx="15" cy="8" rx="4" ry="2.5" fill="#FCD34D"/>
+  <!-- Arm -->
+  <line x1="15" y1="12" x2="15" y2="22" stroke="#71717A" stroke-width="2"/>
+  <!-- Base -->
+  <circle cx="15" cy="24" r="5" fill="#374151"/>
+  <circle cx="15" cy="24" r="3" fill="#4B5563"/>
+</svg>
+

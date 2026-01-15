@@ -4,8 +4,7 @@ import { PlannerProvider, usePlanner, STEPS } from './hooks/usePlanner.jsx';
 import ProgressStepper from './components/ProgressStepper';
 import RoomConfig from './components/RoomConfig';
 import BudgetSelector from './components/BudgetSelector';
-import StylePicker from './components/StylePicker';
-import InspirationUpload from './components/InspirationUpload';
+import StyleOrInspiration from './components/StyleOrInspiration';
 import ProductRecommendations from './components/ProductRecommendations';
 import RoomVisualizer from './components/RoomVisualizer';
 import ConsultationBooking from './components/ConsultationBooking';
@@ -49,8 +48,7 @@ function StepContent() {
   const steps = [
     <RoomConfig key="room" />,
     <BudgetSelector key="budget" />,
-    <StylePicker key="style" />,
-    <InspirationUpload key="inspo" />,
+    <StyleOrInspiration key="style" />,
     <ProductRecommendations key="products" />,
     <RoomVisualizer key="visualizer" />,
     <ConsultationBooking key="booking" />,
@@ -129,4 +127,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 80" fill="none">
+  <!-- Outer frame -->
+  <rect x="4" y="4" width="42" height="72" rx="3" fill="#16A34A"/>
+  <!-- Shelves -->
+  <rect x="7" y="8" width="36" height="15" rx="2" fill="#22C55E"/>
+  <rect x="7" y="26" width="36" height="15" rx="2" fill="#22C55E"/>
+  <rect x="7" y="44" width="36" height="15" rx="2" fill="#22C55E"/>
+  <rect x="7" y="62" width="36" height="10" rx="2" fill="#22C55E"/>
+  <!-- Books row 1 -->
+  <rect x="10" y="10" width="4" height="11" rx="1" fill="#F59E0B"/>
+  <rect x="15" y="10" width="5" height="11" rx="1" fill="#EF4444"/>
+  <rect x="21" y="10" width="4" height="11" rx="1" fill="#3B82F6"/>
+  <rect x="26" y="10" width="6" height="11" rx="1" fill="#8B5CF6"/>
+  <rect x="33" y="10" width="4" height="11" rx="1" fill="#EC4899"/>
+  <!-- Books row 2 -->
+  <rect x="10" y="28" width="5" height="11" rx="1" fill="#10B981"/>
+  <rect x="16" y="28" width="4" height="11" rx="1" fill="#F97316"/>
+  <rect x="21" y="28" width="6" height="11" rx="1" fill="#6366F1"/>
+  <rect x="28" y="28" width="4" height="11" rx="1" fill="#14B8A6"/>
+  <!-- Decorative plant -->
+  <circle cx="36" cy="50" r="4" fill="#4ADE80"/>
+  <rect x="34" y="52" width="4" height="5" rx="1" fill="#A78BFA"/>
+</svg>
+

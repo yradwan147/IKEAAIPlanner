@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 65" fill="none">
+  <!-- Base frame -->
+  <rect x="5" y="10" width="90" height="50" rx="6" fill="#6366F1"/>
+  <!-- Back cushion -->
+  <rect x="8" y="12" width="84" height="12" rx="4" fill="#818CF8"/>
+  <!-- Seat section (fold line visible) -->
+  <rect x="8" y="27" width="84" height="30" rx="4" fill="#A5B4FC"/>
+  <!-- Fold line -->
+  <line x1="8" y1="42" x2="92" y2="42" stroke="#818CF8" stroke-width="2" stroke-dasharray="4 2"/>
+  <!-- Armrests -->
+  <rect x="2" y="15" width="10" height="42" rx="4" fill="#4F46E5"/>
+  <rect x="88" y="15" width="10" height="42" rx="4" fill="#4F46E5"/>
+  <!-- Pillows -->
+  <ellipse cx="25" cy="34" rx="12" ry="6" fill="#C7D2FE"/>
+  <ellipse cx="75" cy="34" rx="12" ry="6" fill="#C7D2FE"/>
+  <!-- Pull handle indicator -->
+  <rect x="45" y="52" width="10" height="4" rx="2" fill="#6366F1"/>
+</svg>
+

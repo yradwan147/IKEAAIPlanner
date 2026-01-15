@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 45" fill="none">
+  <!-- Table top -->
+  <rect x="5" y="5" width="60" height="35" rx="6" fill="#92400E"/>
+  <!-- Wood grain lines -->
+  <path d="M10 15 Q35 12 60 15" stroke="#78350F" stroke-width="1" opacity="0.4"/>
+  <path d="M10 25 Q35 28 60 25" stroke="#78350F" stroke-width="1" opacity="0.4"/>
+  <path d="M10 35 Q35 32 60 35" stroke="#78350F" stroke-width="1" opacity="0.4"/>
+  <!-- Table edge highlight -->
+  <rect x="5" y="5" width="60" height="4" rx="2" fill="#B45309" opacity="0.6"/>
+  <!-- Legs (top view) -->
+  <circle cx="12" cy="12" r="3" fill="#78350F"/>
+  <circle cx="58" cy="12" r="3" fill="#78350F"/>
+  <circle cx="12" cy="33" r="3" fill="#78350F"/>
+  <circle cx="58" cy="33" r="3" fill="#78350F"/>
+</svg>
+

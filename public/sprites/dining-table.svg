@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 55" fill="none">
+  <!-- Table top -->
+  <rect x="5" y="5" width="80" height="45" rx="5" fill="#D97706"/>
+  <!-- Wood grain -->
+  <path d="M10 15 L80 15" stroke="#B45309" stroke-width="1" opacity="0.3"/>
+  <path d="M10 27 L80 27" stroke="#B45309" stroke-width="1" opacity="0.3"/>
+  <path d="M10 40 L80 40" stroke="#B45309" stroke-width="1" opacity="0.3"/>
+  <!-- Edge highlight -->
+  <rect x="5" y="5" width="80" height="3" fill="#F59E0B" opacity="0.5"/>
+  <!-- Place settings -->
+  <circle cx="25" cy="20" r="6" fill="#FAFAF9" opacity="0.4"/>
+  <circle cx="65" cy="20" r="6" fill="#FAFAF9" opacity="0.4"/>
+  <circle cx="25" cy="38" r="6" fill="#FAFAF9" opacity="0.4"/>
+  <circle cx="65" cy="38" r="6" fill="#FAFAF9" opacity="0.4"/>
+  <!-- Center piece -->
+  <ellipse cx="45" cy="27" rx="10" ry="5" fill="#4ADE80" opacity="0.5"/>
+</svg>
+

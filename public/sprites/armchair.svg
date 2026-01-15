@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none">
+  <!-- Chair base -->
+  <rect x="8" y="8" width="44" height="44" rx="10" fill="#6366F1"/>
+  <!-- Back cushion -->
+  <rect x="12" y="10" width="36" height="14" rx="5" fill="#818CF8"/>
+  <!-- Seat cushion -->
+  <rect x="12" y="28" width="36" height="20" rx="5" fill="#A5B4FC"/>
+  <!-- Armrests -->
+  <rect x="4" y="14" width="10" height="32" rx="4" fill="#4F46E5"/>
+  <rect x="46" y="14" width="10" height="32" rx="4" fill="#4F46E5"/>
+  <!-- Cushion detail -->
+  <ellipse cx="30" cy="38" rx="12" ry="6" fill="#818CF8" opacity="0.5"/>
+</svg>
+

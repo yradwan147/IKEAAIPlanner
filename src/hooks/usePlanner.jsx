@@ -42,7 +42,7 @@ function plannerReducer(state, action) {
       return { ...state, currentStep: action.payload };
     
     case 'NEXT_STEP':
-      return { ...state, currentStep: Math.min(state.currentStep + 1, 6) };
+      return { ...state, currentStep: Math.min(state.currentStep + 1, 5) };
     
     case 'PREV_STEP':
       return { ...state, currentStep: Math.max(state.currentStep - 1, 0) };
@@ -145,9 +145,7 @@ export const STEPS = [
   { id: 0, title: 'Room Setup', icon: 'Home' },
   { id: 1, title: 'Budget', icon: 'Wallet' },
   { id: 2, title: 'Style', icon: 'Palette' },
-  { id: 3, title: 'Inspiration', icon: 'Image' },
-  { id: 4, title: 'Products', icon: 'ShoppingBag' },
-  { id: 5, title: 'Layout', icon: 'Layout' },
-  { id: 6, title: 'Book', icon: 'Calendar' },
+  { id: 3, title: 'Products', icon: 'ShoppingBag' },
+  { id: 4, title: 'Layout', icon: 'Layout' },
+  { id: 5, title: 'Book', icon: 'Calendar' },
 ];
-

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 35" fill="none">
+  <!-- Main unit -->
+  <rect x="4" y="4" width="92" height="27" rx="4" fill="#374151"/>
+  <!-- Doors/drawers -->
+  <rect x="8" y="8" width="26" height="19" rx="2" fill="#4B5563"/>
+  <rect x="37" y="8" width="26" height="19" rx="2" fill="#4B5563"/>
+  <rect x="66" y="8" width="26" height="19" rx="2" fill="#4B5563"/>
+  <!-- Handles -->
+  <rect x="18" y="15" width="6" height="2" rx="1" fill="#9CA3AF"/>
+  <rect x="47" y="15" width="6" height="2" rx="1" fill="#9CA3AF"/>
+  <rect x="76" y="15" width="6" height="2" rx="1" fill="#9CA3AF"/>
+  <!-- Top decoration line -->
+  <rect x="8" y="4" width="84" height="2" fill="#6B7280"/>
+</svg>
+

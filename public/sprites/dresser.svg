@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 45" fill="none">
+  <!-- Main body -->
+  <rect x="4" y="4" width="62" height="37" rx="3" fill="#F5F5F4"/>
+  <!-- Drawers -->
+  <rect x="7" y="7" width="56" height="9" rx="2" fill="#E7E5E4"/>
+  <rect x="7" y="18" width="56" height="9" rx="2" fill="#E7E5E4"/>
+  <rect x="7" y="29" width="56" height="9" rx="2" fill="#E7E5E4"/>
+  <!-- Handles -->
+  <rect x="30" y="10" width="10" height="2" rx="1" fill="#9CA3AF"/>
+  <rect x="30" y="21" width="10" height="2" rx="1" fill="#9CA3AF"/>
+  <rect x="30" y="32" width="10" height="2" rx="1" fill="#9CA3AF"/>
+  <!-- Top surface items -->
+  <circle cx="15" cy="4" r="3" fill="#F472B6" opacity="0.6"/>
+  <rect x="50" y="2" width="8" height="4" rx="1" fill="#A78BFA" opacity="0.6"/>
+</svg>
+

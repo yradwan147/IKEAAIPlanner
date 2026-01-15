@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" fill="none">
+  <!-- Sofa base -->
+  <rect x="5" y="10" width="90" height="45" rx="8" fill="#3B82F6"/>
+  <!-- Back cushion -->
+  <rect x="8" y="12" width="84" height="15" rx="6" fill="#60A5FA"/>
+  <!-- Seat cushions -->
+  <rect x="8" y="30" width="40" height="22" rx="5" fill="#93C5FD"/>
+  <rect x="52" y="30" width="40" height="22" rx="5" fill="#93C5FD"/>
+  <!-- Armrests -->
+  <rect x="2" y="15" width="10" height="38" rx="4" fill="#2563EB"/>
+  <rect x="88" y="15" width="10" height="38" rx="4" fill="#2563EB"/>
+  <!-- Cushion lines -->
+  <path d="M28 40 L28 48" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+  <path d="M72 40 L72 48" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+</svg>
+

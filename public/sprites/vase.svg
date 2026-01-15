@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" fill="none">
+  <!-- Vase body -->
+  <path d="M6 8 Q3 12 4 18 Q5 23 10 24 Q15 23 16 18 Q17 12 14 8 Q12 6 10 6 Q8 6 6 8" fill="#D4A574"/>
+  <!-- Highlight -->
+  <path d="M7 10 Q5 13 6 17" stroke="#F5DEB3" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <!-- Opening -->
+  <ellipse cx="10" cy="6" rx="4" ry="2" fill="#C4956A"/>
+  <!-- Flower/plant -->
+  <circle cx="8" cy="3" r="2" fill="#F472B6"/>
+  <circle cx="12" cy="2" r="2" fill="#FB923C"/>
+  <circle cx="10" cy="4" r="1.5" fill="#FBBF24"/>
+  <!-- Stems -->
+  <line x1="8" y1="5" x2="8" y2="6" stroke="#22C55E" stroke-width="1"/>
+  <line x1="12" y1="4" x2="11" y2="6" stroke="#22C55E" stroke-width="1"/>
+</svg>
+

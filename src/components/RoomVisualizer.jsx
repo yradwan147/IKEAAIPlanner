@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { Stage, Layer, Rect, Text, Group, Line } from 'react-konva';
+import { Stage, Layer, Rect, Text, Group, Line, Image as KonvaImage } from 'react-konva';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, ArrowLeft, Download, RotateCw, ZoomIn, ZoomOut, 
@@ -8,7 +8,65 @@ import {
 import { usePlanner } from '../hooks/usePlanner.jsx';
 import { formatPrice } from '../utils/recommendations';
 
-// Furniture colors by category
+// Sprite mappings for furniture subcategories
+const spriteMap = {
+  // Seating
+  'sofa': '/sprites/sofa.svg',
+  'sofa-bed': '/sprites/sofa-bed.svg',
+  'armchair': '/sprites/armchair.svg',
+  'office-chair': '/sprites/office-chair.svg',
+  'dining-chair': '/sprites/dining-chair.svg',
+  // Storage
+  'shelving': '/sprites/shelving.svg',
+  'tv-unit': '/sprites/tv-unit.svg',
+  'bookcase': '/sprites/bookcase.svg',
+  'dresser': '/sprites/dresser.svg',
+  'wardrobe': '/sprites/wardrobe.svg',
+  'drawer-unit': '/sprites/drawer-unit.svg',
+  // Tables
+  'coffee-table': '/sprites/coffee-table.svg',
+  'side-table': '/sprites/side-table.svg',
+  'desk': '/sprites/desk.svg',
+  'dining-table': '/sprites/dining-table.svg',
+  // Bedroom
+  'bed': '/sprites/bed.svg',
+  // Lighting
+  'pendant': '/sprites/pendant.svg',
+  'floor-lamp': '/sprites/floor-lamp.svg',
+  'table-lamp': '/sprites/table-lamp.svg',
+  // Decor
+  'rug': '/sprites/rug.svg',
+  'textile': '/sprites/textile.svg',
+  'plant': '/sprites/plant.svg',
+  'frame': '/sprites/frame.svg',
+  'vase': '/sprites/vase.svg',
+};
+
+// Category fallback sprites
+const categoryFallback = {
+  seating: '/sprites/sofa.svg',
+  storage: '/sprites/shelving.svg',
+  tables: '/sprites/coffee-table.svg',
+  bedroom: '/sprites/bed.svg',
+  lighting: '/sprites/pendant.svg',
+  decor: '/sprites/plant.svg',
+};
+
+// Hook to load sprite images
+function useSprite(subcategory, category) {
+  const [image, setImage] = useState(null);
+  
+  useEffect(() => {
+    const spritePath = spriteMap[subcategory] || categoryFallback[category] || '/sprites/sofa.svg';
+    const img = new window.Image();
+    img.src = spritePath;
+    img.onload = () => setImage(img);
+  }, [subcategory, category]);
+  
+  return image;
+}
+
+// Furniture colors by category (fallback for items without sprites)
 const categoryColors = {
   seating: '#0058A3',
   storage: '#00A86B',
@@ -21,6 +79,7 @@ const categoryColors = {
 function FurnitureItem({ item, isSelected, onSelect, onDragEnd, scale }) {
   const width = (item.dimensions.width / 100) * scale;
   const depth = (item.dimensions.depth / 100) * scale;
+  const spriteImage = useSprite(item.subcategory, item.category);
   const color = categoryColors[item.category] || '#666';
 
   return (
@@ -32,34 +91,77 @@ function FurnitureItem({ item, isSelected, onSelect, onDragEnd, scale }) {
       onTap={() => onSelect(item.id)}
       onDragEnd={(e) => onDragEnd(item.id, e.target.x(), e.target.y())}
     >
-      {/* Furniture rectangle */}
+      {/* Shadow */}
       <Rect
+        x={3}
+        y={3}
         width={width}
         height={depth}
-        fill={color}
-        opacity={0.8}
+        fill="rgba(0,0,0,0.15)"
         cornerRadius={4}
-        stroke={isSelected ? '#FFDB00' : '#fff'}
-        strokeWidth={isSelected ? 3 : 1}
-        shadowColor="black"
-        shadowBlur={isSelected ? 10 : 5}
-        shadowOpacity={0.3}
-        shadowOffset={{ x: 2, y: 2 }}
       />
       
-      {/* Label */}
-      <Text
-        text={item.name}
-        width={width}
-        height={depth}
-        align="center"
-        verticalAlign="middle"
-        fontSize={Math.min(width, depth) > 40 ? 10 : 8}
-        fill="#fff"
-        fontStyle="bold"
-        wrap="word"
-        padding={4}
-      />
+      {/* Selection highlight background */}
+      {isSelected && (
+        <Rect
+          x={-4}
+          y={-4}
+          width={width + 8}
+          height={depth + 8}
+          fill="transparent"
+          stroke="#FFDB00"
+          strokeWidth={3}
+          cornerRadius={6}
+          dash={[8, 4]}
+        />
+      )}
+      
+      {/* Furniture sprite or fallback */}
+      {spriteImage ? (
+        <KonvaImage
+          image={spriteImage}
+          width={width}
+          height={depth}
+          cornerRadius={4}
+        />
+      ) : (
+        <>
+          <Rect
+            width={width}
+            height={depth}
+            fill={color}
+            opacity={0.8}
+            cornerRadius={4}
+            stroke={isSelected ? '#FFDB00' : '#fff'}
+            strokeWidth={isSelected ? 3 : 1}
+          />
+          <Text
+            text={item.name}
+            width={width}
+            height={depth}
+            align="center"
+            verticalAlign="middle"
+            fontSize={Math.min(width, depth) > 40 ? 10 : 8}
+            fill="#fff"
+            fontStyle="bold"
+            wrap="word"
+            padding={4}
+          />
+        </>
+      )}
+      
+      {/* Label below sprite */}
+      {spriteImage && (
+        <Text
+          text={item.name}
+          y={depth + 4}
+          width={width}
+          align="center"
+          fontSize={9}
+          fill="#333"
+          fontStyle="bold"
+        />
+      )}
     </Group>
   );
 }
@@ -117,9 +219,10 @@ export default function RoomVisualizer() {
         productId: product.id,
         name: product.name,
         category: product.category,
+        subcategory: product.subcategory,
         dimensions: product.dimensions,
-        x: 50 + (index % 4) * 100,
-        y: 50 + Math.floor(index / 4) * 100,
+        x: 50 + (index % 4) * 120,
+        y: 50 + Math.floor(index / 4) * 120,
         rotation: 0,
       }));
       dispatch({ type: 'SET_FURNITURE_LAYOUT', payload: layout });
@@ -358,15 +461,7 @@ export default function RoomVisualizer() {
 
             {/* Legend */}
             <div className="p-4 border-t border-ikea-gray-100 flex flex-wrap gap-4">
-              {Object.entries(categoryColors).map(([category, color]) => (
-                <div key={category} className="flex items-center gap-2">
-                  <div 
-                    className="w-4 h-4 rounded"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span className="text-sm text-ikea-gray-600 capitalize">{category}</span>
-                </div>
-              ))}
+              <span className="text-sm text-ikea-gray-500 font-medium">Furniture shown with realistic top-view sprites</span>
             </div>
           </motion.div>
         </div>
@@ -416,6 +511,7 @@ export default function RoomVisualizer() {
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {furnitureLayout.map((item) => {
                 const product = selectedProducts.find(p => p.id === item.productId);
+                const spritePath = spriteMap[item.subcategory] || categoryFallback[item.category];
                 return (
                   <button
                     key={item.id}
@@ -428,10 +524,13 @@ export default function RoomVisualizer() {
                       }
                     `}
                   >
-                    <div 
-                      className="w-3 h-3 rounded"
-                      style={{ backgroundColor: categoryColors[item.category] }}
-                    />
+                    {spritePath && (
+                      <img 
+                        src={spritePath} 
+                        alt="" 
+                        className="w-8 h-8 object-contain"
+                      />
+                    )}
                     <span className="text-sm text-ikea-gray-700 truncate flex-1">
                       {item.name}
                     </span>
@@ -480,4 +579,3 @@ export default function RoomVisualizer() {
     </div>
   );
 }
-
