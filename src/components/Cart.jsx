@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShoppingCart, ArrowRight, ArrowLeft, Trash2, Plus, Minus,
   CreditCard, Calendar, Package, Truck, Shield, Check,
-  Sparkles, PartyPopper
+  Sparkles, PartyPopper, Link2, Copy, CheckCircle, X
 } from 'lucide-react';
 import { usePlanner } from '../hooks/usePlanner.jsx';
 import { formatPrice, getRoom } from '../utils/recommendations';
@@ -44,6 +44,127 @@ const categoryFallback = {
   lighting: '/sprites/pendant.svg',
   decor: '/sprites/plant.svg',
 };
+
+function ShareLinkModal({ shareUrl, onClose }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = shareUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-br from-violet-500 to-purple-600 p-6 text-white relative">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-1 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.1, type: 'spring', stiffness: 200 }}
+            className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4"
+          >
+            <Link2 className="w-8 h-8 text-white" />
+          </motion.div>
+          <h2 className="text-xl font-bold text-center">Share Your Cart</h2>
+          <p className="text-violet-100 mt-1 text-center text-sm">
+            Send this link to share your room design
+          </p>
+        </div>
+
+        {/* Link Display */}
+        <div className="p-6 space-y-4">
+          <div className="bg-gray-50 rounded-2xl p-4">
+            <p className="text-xs text-gray-500 mb-2 font-medium">Shareable Link</p>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 font-mono truncate">
+                {shareUrl}
+              </div>
+              <motion.button
+                onClick={handleCopy}
+                whileTap={{ scale: 0.95 }}
+                className={`
+                  p-3 rounded-xl transition-all duration-200 flex-shrink-0
+                  ${copied 
+                    ? 'bg-green-500 text-white' 
+                    : 'bg-ikea-blue text-white hover:bg-ikea-blue-dark'
+                  }
+                `}
+              >
+                {copied ? (
+                  <CheckCircle className="w-5 h-5" />
+                ) : (
+                  <Copy className="w-5 h-5" />
+                )}
+              </motion.button>
+            </div>
+            {copied && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-green-600 text-sm mt-2 flex items-center gap-1"
+              >
+                <CheckCircle className="w-4 h-4" />
+                Copied to clipboard!
+              </motion.p>
+            )}
+          </div>
+
+          <div className="bg-amber-50 rounded-xl p-4 flex items-start gap-3">
+            <Sparkles className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            <div className="text-sm text-gray-700">
+              <p className="font-medium">Perfect for sharing!</p>
+              <p className="text-gray-600 mt-1">
+                Anyone with this link can view your room design and product selections.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 pt-0">
+          <button
+            onClick={onClose}
+            className="w-full btn-secondary"
+          >
+            Done
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 function CheckoutSuccessModal({ totalPrice, itemCount, onClose, dispatch }) {
   return (
@@ -184,8 +305,10 @@ function CartItem({ product, onRemove }) {
 
 export default function Cart() {
   const { state, dispatch } = usePlanner();
-  const { selectedProducts, roomConfig, budget } = state;
+  const { selectedProducts, roomConfig, budget, selectedStyles } = state;
   const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
 
   const room = getRoom(roomConfig.type);
   const totalPrice = selectedProducts.reduce((sum, p) => sum + p.price, 0);
@@ -201,6 +324,26 @@ export default function Cart() {
 
   const handleBookConsultation = () => {
     dispatch({ type: 'NEXT_STEP' });
+  };
+
+  const handleGenerateShareLink = () => {
+    // Create a shareable state object with essential data
+    const shareData = {
+      room: roomConfig.type,
+      products: selectedProducts.map(p => p.id),
+      budget: budget.total,
+      styles: selectedStyles,
+    };
+    
+    // Encode the data as base64
+    const encodedData = btoa(JSON.stringify(shareData));
+    
+    // Generate the shareable URL
+    const baseUrl = window.location.origin + window.location.pathname;
+    const generatedUrl = `${baseUrl}?share=${encodedData}`;
+    
+    setShareUrl(generatedUrl);
+    setShowShareModal(true);
   };
 
   return (
@@ -236,6 +379,19 @@ export default function Cart() {
               <ShoppingCart className="w-6 h-6 text-ikea-blue" />
               Items ({selectedProducts.length})
             </h3>
+            
+            {/* Share Link Button */}
+            {selectedProducts.length > 0 && (
+              <motion.button
+                onClick={handleGenerateShareLink}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-xl font-medium text-sm shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <Link2 className="w-4 h-4" />
+                Share Cart
+              </motion.button>
+            )}
           </motion.div>
 
           {selectedProducts.length === 0 ? (
@@ -434,6 +590,16 @@ export default function Cart() {
             itemCount={selectedProducts.length}
             onClose={() => setShowCheckoutSuccess(false)}
             dispatch={dispatch}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Share Link Modal */}
+      <AnimatePresence>
+        {showShareModal && (
+          <ShareLinkModal
+            shareUrl={shareUrl}
+            onClose={() => setShowShareModal(false)}
           />
         )}
       </AnimatePresence>

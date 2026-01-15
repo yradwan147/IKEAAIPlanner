@@ -11,6 +11,7 @@ import Cart from './components/Cart';
 import ConsultationBooking from './components/ConsultationBooking';
 import DebugProducts from './components/DebugProducts';
 import { Sparkles } from 'lucide-react';
+import { products } from './utils/recommendations';
 
 function Header() {
   return (
@@ -73,11 +74,70 @@ function StepContent() {
   );
 }
 
+// Component to handle shared cart links
+function SharedCartLoader() {
+  const { dispatch } = usePlanner();
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (loaded) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const shareData = urlParams.get('share');
+
+    if (shareData) {
+      try {
+        // Decode the base64 share data
+        const decoded = JSON.parse(atob(shareData));
+        
+        // Restore room config
+        if (decoded.room) {
+          dispatch({ type: 'SET_ROOM_CONFIG', payload: { type: decoded.room } });
+        }
+
+        // Restore budget
+        if (decoded.budget) {
+          dispatch({ type: 'SET_BUDGET', payload: { total: decoded.budget } });
+        }
+
+        // Restore styles
+        if (decoded.styles && decoded.styles.length > 0) {
+          dispatch({ type: 'SET_STYLES', payload: decoded.styles });
+        }
+
+        // Restore products - look up full product data by ID
+        if (decoded.products && decoded.products.length > 0) {
+          decoded.products.forEach(productId => {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+              dispatch({ type: 'ADD_PRODUCT', payload: product });
+            }
+          });
+        }
+
+        // Navigate to Cart step (step 5)
+        dispatch({ type: 'SET_STEP', payload: 5 });
+
+        // Clean up the URL (remove the share parameter)
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, '', newUrl);
+
+        setLoaded(true);
+      } catch (error) {
+        console.error('Failed to load shared cart:', error);
+      }
+    }
+  }, [dispatch, loaded]);
+
+  return null;
+}
+
 function PlannerApp() {
   const { state } = usePlanner();
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SharedCartLoader />
       <Header />
       
       <div className="flex-1 flex flex-col">
