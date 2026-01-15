@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShoppingCart, ArrowRight, ArrowLeft, Trash2, Plus, Minus,
   CreditCard, Calendar, Package, Truck, Shield, Check,
-  Sparkles, PartyPopper, Link2, Copy, CheckCircle, X
+  Sparkles, PartyPopper, Link2, Copy, CheckCircle, X,
+  User, Mail, Phone, MapPin, Home, Building2
 } from 'lucide-react';
 import { usePlanner } from '../hooks/usePlanner.jsx';
 import { formatPrice, getRoom } from '../utils/recommendations';
@@ -166,7 +167,297 @@ function ShareLinkModal({ shareUrl, onClose }) {
   );
 }
 
-function CheckoutSuccessModal({ totalPrice, itemCount, onClose, dispatch }) {
+function CheckoutFormModal({ totalPrice, itemCount, onClose, onComplete }) {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    paymentMethod: 'card',
+  });
+  const [errors, setErrors] = useState({});
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: null }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
+    if (!formData.address.trim()) newErrors.address = 'Address is required';
+    if (!formData.city.trim()) newErrors.city = 'City is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsProcessing(true);
+    // Simulate payment processing
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsProcessing(false);
+    onComplete(formData);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl my-8"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white relative">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-1 hover:bg-white/20 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+              <CreditCard className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold">Checkout</h2>
+              <p className="text-emerald-100 text-sm">
+                {itemCount} items • {formatPrice(totalPrice)}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="p-6 space-y-6 max-h-[60vh] overflow-y-auto">
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <User className="w-5 h-5 text-emerald-600" />
+              Contact Information
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                <input
+                  type="text"
+                  value={formData.firstName}
+                  onChange={(e) => handleChange('firstName', e.target.value)}
+                  placeholder="Ahmed"
+                  className={`input-field ${errors.firstName ? 'border-red-500' : ''}`}
+                />
+                {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                <input
+                  type="text"
+                  value={formData.lastName}
+                  onChange={(e) => handleChange('lastName', e.target.value)}
+                  placeholder="Al-Rashid"
+                  className={`input-field ${errors.lastName ? 'border-red-500' : ''}`}
+                />
+                {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    placeholder="ahmed@email.com"
+                    className={`input-field pl-10 ${errors.email ? 'border-red-500' : ''}`}
+                  />
+                </div>
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    placeholder="+966 XX XXX XXXX"
+                    className={`input-field pl-10 ${errors.phone ? 'border-red-500' : ''}`}
+                  />
+                </div>
+                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* Shipping Address */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-emerald-600" />
+              Shipping Address
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Street Address *</label>
+                <div className="relative">
+                  <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    value={formData.address}
+                    onChange={(e) => handleChange('address', e.target.value)}
+                    placeholder="123 King Fahd Road"
+                    className={`input-field pl-10 ${errors.address ? 'border-red-500' : ''}`}
+                  />
+                </div>
+                {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                  <div className="relative">
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={formData.city}
+                      onChange={(e) => handleChange('city', e.target.value)}
+                      placeholder="Riyadh"
+                      className={`input-field pl-10 ${errors.city ? 'border-red-500' : ''}`}
+                    />
+                  </div>
+                  {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                  <input
+                    type="text"
+                    value={formData.postalCode}
+                    onChange={(e) => handleChange('postalCode', e.target.value)}
+                    placeholder="12345"
+                    className="input-field"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-emerald-600" />
+              Payment Method
+            </h3>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {[
+                { id: 'card', label: 'Credit Card', icon: '💳' },
+                { id: 'apple', label: 'Apple Pay', icon: '' },
+                { id: 'cod', label: 'Cash on Delivery', icon: '💵' },
+              ].map((method) => (
+                <button
+                  key={method.id}
+                  type="button"
+                  onClick={() => handleChange('paymentMethod', method.id)}
+                  className={`
+                    p-4 rounded-xl border-2 transition-all text-center
+                    ${formData.paymentMethod === method.id
+                      ? 'border-emerald-500 bg-emerald-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                    }
+                  `}
+                >
+                  <span className="text-2xl block mb-1">{method.icon}</span>
+                  <span className="text-sm font-medium text-gray-700">{method.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Order Summary */}
+          <div className="bg-gray-50 rounded-2xl p-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-gray-600">Subtotal</span>
+              <span className="font-medium">{formatPrice(totalPrice)}</span>
+            </div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-gray-600">Shipping</span>
+              <span className="font-medium text-green-600">Free</span>
+            </div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-gray-600">VAT (15%)</span>
+              <span className="font-medium">{formatPrice(totalPrice * 0.15)}</span>
+            </div>
+            <div className="border-t border-gray-200 pt-2 mt-2">
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-bold text-gray-800">Total</span>
+                <span className="text-lg font-bold text-emerald-600">{formatPrice(totalPrice * 1.15)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-gray-100 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 btn-secondary"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={isProcessing}
+            className={`
+              flex-1 btn-primary bg-emerald-600 hover:bg-emerald-700 flex items-center justify-center gap-2
+              ${isProcessing ? 'opacity-75 cursor-wait' : ''}
+            `}
+          >
+            {isProcessing ? (
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                />
+                Processing...
+              </>
+            ) : (
+              <>
+                <Check className="w-5 h-5" />
+                Place Order
+              </>
+            )}
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function CheckoutSuccessModal({ totalPrice, itemCount, customerInfo, onClose, dispatch }) {
+  // Generate a random order number
+  const orderNumber = `IKEA-${Date.now().toString(36).toUpperCase()}`;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -191,11 +482,20 @@ function CheckoutSuccessModal({ totalPrice, itemCount, onClose, dispatch }) {
             <PartyPopper className="w-10 h-10 text-emerald-600" />
           </motion.div>
           <h2 className="text-2xl font-bold">Order Confirmed!</h2>
-          <p className="text-emerald-100 mt-2">Thank you for shopping with IKEA</p>
+          <p className="text-emerald-100 mt-2">
+            Thank you, {customerInfo?.firstName || 'Customer'}!
+          </p>
         </div>
 
         {/* Details */}
         <div className="p-6 space-y-4">
+          {/* Order Number */}
+          <div className="bg-emerald-50 rounded-2xl p-4 text-center">
+            <p className="text-sm text-emerald-600 font-medium">Order Number</p>
+            <p className="text-xl font-bold text-emerald-700 font-mono">{orderNumber}</p>
+          </div>
+
+          {/* Order Details */}
           <div className="bg-gray-50 rounded-2xl p-4 space-y-3">
             <div className="flex items-center gap-3">
               <Package className="w-5 h-5 text-emerald-600" />
@@ -206,7 +506,7 @@ function CheckoutSuccessModal({ totalPrice, itemCount, onClose, dispatch }) {
             <div className="flex items-center gap-3">
               <CreditCard className="w-5 h-5 text-emerald-600" />
               <span className="text-gray-700">
-                Total: <strong>{formatPrice(totalPrice)}</strong>
+                Total: <strong>{formatPrice(totalPrice * 1.15)}</strong> (incl. VAT)
               </span>
             </div>
             <div className="flex items-center gap-3">
@@ -217,12 +517,30 @@ function CheckoutSuccessModal({ totalPrice, itemCount, onClose, dispatch }) {
             </div>
           </div>
 
+          {/* Shipping Address */}
+          {customerInfo && (
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <p className="text-sm text-gray-500 font-medium mb-2 flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Shipping to
+              </p>
+              <p className="text-gray-800 font-medium">
+                {customerInfo.firstName} {customerInfo.lastName}
+              </p>
+              <p className="text-gray-600 text-sm">{customerInfo.address}</p>
+              <p className="text-gray-600 text-sm">
+                {customerInfo.city}{customerInfo.postalCode ? `, ${customerInfo.postalCode}` : ''}
+              </p>
+              <p className="text-gray-600 text-sm">{customerInfo.phone}</p>
+            </div>
+          )}
+
           <div className="bg-amber-50 rounded-xl p-4 flex items-start gap-3">
             <Sparkles className="w-5 h-5 text-amber-600 mt-0.5" />
             <div className="text-sm text-gray-700">
               <p className="font-medium">What's next?</p>
               <p className="text-gray-600 mt-1">
-                You'll receive a confirmation email with your order details and tracking information once your items ship.
+                Confirmation email sent to <strong>{customerInfo?.email}</strong> with tracking information.
               </p>
             </div>
           </div>
@@ -306,9 +624,11 @@ function CartItem({ product, onRemove }) {
 export default function Cart() {
   const { state, dispatch } = usePlanner();
   const { selectedProducts, roomConfig, budget, selectedStyles } = state;
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [showCheckoutSuccess, setShowCheckoutSuccess] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
+  const [customerInfo, setCustomerInfo] = useState(null);
 
   const room = getRoom(roomConfig.type);
   const totalPrice = selectedProducts.reduce((sum, p) => sum + p.price, 0);
@@ -319,6 +639,12 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
+    setShowCheckoutForm(true);
+  };
+
+  const handleCheckoutComplete = (formData) => {
+    setCustomerInfo(formData);
+    setShowCheckoutForm(false);
     setShowCheckoutSuccess(true);
   };
 
@@ -582,12 +908,25 @@ export default function Cart() {
         </button>
       </div>
 
+      {/* Checkout Form Modal */}
+      <AnimatePresence>
+        {showCheckoutForm && (
+          <CheckoutFormModal
+            totalPrice={totalPrice}
+            itemCount={selectedProducts.length}
+            onClose={() => setShowCheckoutForm(false)}
+            onComplete={handleCheckoutComplete}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Checkout Success Modal */}
       <AnimatePresence>
         {showCheckoutSuccess && (
           <CheckoutSuccessModal
             totalPrice={totalPrice}
             itemCount={selectedProducts.length}
+            customerInfo={customerInfo}
             onClose={() => setShowCheckoutSuccess(false)}
             dispatch={dispatch}
           />
