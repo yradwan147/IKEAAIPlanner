@@ -572,7 +572,7 @@ export default function RoomVisualizer() {
           onClick={() => dispatch({ type: 'NEXT_STEP' })}
           className="btn-primary flex items-center gap-2 text-lg"
         >
-          Book Consultation
+          Continue to Cart
           <ArrowRight className="w-5 h-5" />
         </button>
       </div>

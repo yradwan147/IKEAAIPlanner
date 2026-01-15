@@ -7,6 +7,7 @@ import BudgetSelector from './components/BudgetSelector';
 import StyleOrInspiration from './components/StyleOrInspiration';
 import ProductRecommendations from './components/ProductRecommendations';
 import RoomVisualizer from './components/RoomVisualizer';
+import Cart from './components/Cart';
 import ConsultationBooking from './components/ConsultationBooking';
 import DebugProducts from './components/DebugProducts';
 import { Sparkles } from 'lucide-react';
@@ -51,6 +52,7 @@ function StepContent() {
     <StyleOrInspiration key="style" />,
     <ProductRecommendations key="products" />,
     <RoomVisualizer key="visualizer" />,
+    <Cart key="cart" />,
     <ConsultationBooking key="booking" />,
   ];
 
