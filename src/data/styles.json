@@ -1,0 +1,60 @@
+{
+  "styles": [
+    {
+      "id": "modern",
+      "name": "Modern Minimalist",
+      "nameAr": "عصري بسيط",
+      "description": "Clean lines, neutral colors, and functional furniture",
+      "colors": ["#FFFFFF", "#F5F5F5", "#333333", "#0058A3"],
+      "image": "https://www.ikea.com/images/a-modern-minimalist-living-room-with-white-walls-and-simple-b7b5a6c5c6c7c8c9d0.jpg",
+      "keywords": ["clean", "simple", "white", "neutral", "geometric"],
+      "preferredCategories": ["modern", "urban"],
+      "budgetMultiplier": 1.0
+    },
+    {
+      "id": "scandinavian",
+      "name": "Scandinavian",
+      "nameAr": "اسكندنافي",
+      "description": "Light, airy spaces with natural materials and cozy textures",
+      "colors": ["#FFFFFF", "#F0E6D3", "#A0B5C0", "#6B8E7F"],
+      "image": "https://www.ikea.com/images/scandinavian-style-room-with-natural-wood-and-light-colors.jpg",
+      "keywords": ["natural", "wood", "light", "cozy", "hygge", "birch"],
+      "preferredCategories": ["scandinavian", "cozy"],
+      "budgetMultiplier": 1.1
+    },
+    {
+      "id": "traditional",
+      "name": "Traditional Saudi",
+      "nameAr": "تقليدي سعودي",
+      "description": "Warm, welcoming spaces inspired by Saudi hospitality and culture",
+      "colors": ["#8B4513", "#D4A574", "#F5DEB3", "#2F4F4F"],
+      "image": "https://www.ikea.com/images/traditional-middle-eastern-inspired-room.jpg",
+      "keywords": ["warm", "brown", "gold", "patterns", "hospitality", "family"],
+      "preferredCategories": ["traditional", "cozy"],
+      "budgetMultiplier": 1.2
+    },
+    {
+      "id": "cozy",
+      "name": "Cozy Family",
+      "nameAr": "دافئ عائلي",
+      "description": "Comfortable, practical spaces designed for family living",
+      "colors": ["#F5F5DC", "#DEB887", "#8FBC8F", "#CD853F"],
+      "image": "https://www.ikea.com/images/cozy-family-living-room-with-soft-textures.jpg",
+      "keywords": ["comfortable", "soft", "warm", "family", "practical", "textiles"],
+      "preferredCategories": ["cozy", "traditional"],
+      "budgetMultiplier": 0.95
+    },
+    {
+      "id": "urban",
+      "name": "Urban Compact",
+      "nameAr": "حضري مدمج",
+      "description": "Smart, space-saving solutions for city living",
+      "colors": ["#2C3E50", "#34495E", "#ECF0F1", "#E74C3C"],
+      "image": "https://www.ikea.com/images/urban-compact-apartment-with-smart-storage.jpg",
+      "keywords": ["compact", "smart", "storage", "efficient", "modern", "apartment"],
+      "preferredCategories": ["urban", "modern"],
+      "budgetMultiplier": 0.85
+    }
+  ]
+}
+

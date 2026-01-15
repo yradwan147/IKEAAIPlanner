@@ -1,0 +1,108 @@
+{
+  "rooms": [
+    {
+      "id": "living-room",
+      "name": "Living Room",
+      "nameAr": "غرفة المعيشة",
+      "icon": "Sofa",
+      "description": "The heart of your home for relaxation and gathering",
+      "defaultWidth": 5,
+      "defaultLength": 6,
+      "essentialCategories": ["seating", "tables", "storage", "lighting", "decor"],
+      "budgetAllocation": {
+        "seating": 45,
+        "tables": 15,
+        "storage": 20,
+        "lighting": 10,
+        "decor": 10
+      },
+      "furnitureSlots": [
+        { "type": "sofa", "x": 50, "y": 70, "priority": 1 },
+        { "type": "coffee-table", "x": 50, "y": 50, "priority": 2 },
+        { "type": "tv-unit", "x": 50, "y": 15, "priority": 3 },
+        { "type": "armchair", "x": 15, "y": 60, "priority": 4 },
+        { "type": "floor-lamp", "x": 10, "y": 80, "priority": 5 },
+        { "type": "rug", "x": 50, "y": 55, "priority": 6 }
+      ]
+    },
+    {
+      "id": "bedroom",
+      "name": "Bedroom",
+      "nameAr": "غرفة النوم",
+      "icon": "Bed",
+      "description": "Your personal sanctuary for rest and relaxation",
+      "defaultWidth": 4,
+      "defaultLength": 5,
+      "essentialCategories": ["bedroom", "storage", "lighting", "decor"],
+      "budgetAllocation": {
+        "bedroom": 50,
+        "storage": 30,
+        "lighting": 10,
+        "decor": 10
+      },
+      "furnitureSlots": [
+        { "type": "bed", "x": 50, "y": 75, "priority": 1 },
+        { "type": "dresser", "x": 15, "y": 30, "priority": 2 },
+        { "type": "wardrobe", "x": 85, "y": 50, "priority": 3 },
+        { "type": "table-lamp", "x": 20, "y": 85, "priority": 4 },
+        { "type": "rug", "x": 50, "y": 50, "priority": 5 }
+      ]
+    },
+    {
+      "id": "home-office",
+      "name": "Home Office",
+      "nameAr": "مكتب منزلي",
+      "icon": "Monitor",
+      "description": "A productive workspace in your home",
+      "defaultWidth": 3,
+      "defaultLength": 4,
+      "essentialCategories": ["tables", "seating", "storage", "lighting"],
+      "budgetAllocation": {
+        "tables": 35,
+        "seating": 30,
+        "storage": 25,
+        "lighting": 10
+      },
+      "furnitureSlots": [
+        { "type": "desk", "x": 50, "y": 20, "priority": 1 },
+        { "type": "office-chair", "x": 50, "y": 40, "priority": 2 },
+        { "type": "shelving", "x": 85, "y": 50, "priority": 3 },
+        { "type": "drawer-unit", "x": 25, "y": 25, "priority": 4 },
+        { "type": "floor-lamp", "x": 10, "y": 20, "priority": 5 }
+      ]
+    },
+    {
+      "id": "dining-room",
+      "name": "Dining Room",
+      "nameAr": "غرفة الطعام",
+      "icon": "UtensilsCrossed",
+      "description": "Where family and friends come together for meals",
+      "defaultWidth": 4,
+      "defaultLength": 5,
+      "essentialCategories": ["tables", "seating", "lighting", "storage", "decor"],
+      "budgetAllocation": {
+        "tables": 35,
+        "seating": 35,
+        "lighting": 15,
+        "storage": 10,
+        "decor": 5
+      },
+      "furnitureSlots": [
+        { "type": "dining-table", "x": 50, "y": 50, "priority": 1 },
+        { "type": "dining-chair", "x": 30, "y": 50, "priority": 2 },
+        { "type": "dining-chair", "x": 70, "y": 50, "priority": 2 },
+        { "type": "dining-chair", "x": 50, "y": 30, "priority": 2 },
+        { "type": "dining-chair", "x": 50, "y": 70, "priority": 2 },
+        { "type": "pendant", "x": 50, "y": 50, "priority": 3 },
+        { "type": "shelving", "x": 90, "y": 50, "priority": 4 }
+      ]
+    }
+  ],
+  "familySizes": [
+    { "id": "single", "name": "Single", "nameAr": "فرد واحد", "minSeating": 1, "multiplier": 0.7 },
+    { "id": "couple", "name": "Couple", "nameAr": "زوجين", "minSeating": 2, "multiplier": 0.85 },
+    { "id": "small-family", "name": "Small Family (3-4)", "nameAr": "عائلة صغيرة", "minSeating": 4, "multiplier": 1.0 },
+    { "id": "large-family", "name": "Large Family (5+)", "nameAr": "عائلة كبيرة", "minSeating": 6, "multiplier": 1.2 }
+  ]
+}
+
